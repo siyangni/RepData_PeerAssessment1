@@ -8,10 +8,54 @@ output:
 
 ## Loading and preprocessing the data
 
+The code below first downloads data into proper folders. Then it reads into the 
+`activity.csv` file, changes the date column to R Date object, and creates two 
+variables that help us tell whether a date is a weekend and which day of a week
+a given date is.
 
+```{r}
+library(tidyverse)
+library(lubridate)
+
+fileurl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+zipfile <- "./data.zip"
+filedir <- "./data"
+unzip_path <- "./data"
+
+if (!file.exists(filedir)){dir.create(filedir)}
+download.file(fileurl, file.path(zipfile))
+unzip(zipfile, exdir = unzip_path)
+datafile <- file.path(unzip_path,"activity.csv")
+
+activity <- read.csv(datafile)
+
+activity$date <- ymd(activity$date) # transform original data object
+activity$weekend <- as.factor(ifelse(weekdays(activity$date)=="Saturday"|
+                                             weekdays(activity$date)=="Sunday",
+                                                      'Weekend','Weekday'))
+activity$dayofweek <- as.factor(weekdays(activity$date))
+```
 
 ## What is mean total number of steps taken per day?
 
+The total number of steps taken per day
+```{r}
+t <- activity %>% group_by(date) %>% 
+        summarise(steps_perday = sum(steps, na.rm = TRUE))
+```
+A histogram that shows the total steps taken each day
+```{r}
+ggplot(data = t, aes(x=steps_perday)) +
+        geom_histogram(binwidth = 500, color="darkblue", fill="lightblue") +
+        labs(x = "Total Steps per Day", y = "Frequency", 
+             title = "Histogram of the Total Steps Taken Each Day")
+```
+The mean and median of the steps taken per day
+
+```{r}
+t %>% summarise(average = mean(steps_perday, na.rm = TRUE), 
+                median = median(steps_perday, na.rm = TRUE))
+```
 
 
 ## What is the average daily activity pattern?
