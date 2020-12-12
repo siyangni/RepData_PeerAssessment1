@@ -1,3 +1,30 @@
+# Note to Reviewers of My Assignment
+
+<br>
+
+### 1. I used `render()` instead of `knit2html()` to knit the .Rmd file
+
+<br>
+While doing this week's assignment, I found that `knit2html()` function does not work properly. It gives out the message
+
+`Error: It seems you should call rmarkdown::render() instead of knitr::knit2html() because PA1_template.Rmd appears to be an R Markdown v2 document.`
+
+My way of fixing it is to use the `render()` function to output the html file and markdown file. Also if you don't want to write code, just hitting the button "knit" also gets the job done.
+
+<br>
+
+### 2. I used `Amelia II` package to implement multiple imputation
+
+Please check [Amelia II Official Website](https://gking.harvard.edu/amelia) for
+more information of the `Amelia II` package.
+
+This paper [Multiple imputation for missing data in epidemiological and clinical research: potential and pitfalls](https://www.bmj.com/content/338/bmj.b2393#:~:text=Multiple%20imputation%20is%20a%20general,obtained%20from%20each%20of%20them.) gives out a good summary
+of what multiple imputation is, along with its benefits and pitfalls.
+
+<br>
+<br>
+<br>
+
 ## Introduction
 
 It is now possible to collect a large amount of data about personal
